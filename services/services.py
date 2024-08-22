@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from pydantic import BaseModel
 import os
 import requests
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, unquote
 
 class Service(BaseModel):
     service: str
@@ -11,11 +11,11 @@ class Service(BaseModel):
 def get_service(request: Service):
     if request.service == 'zendesk':
         baseUrl = os.getenv("ZENDESK_URL")
-        normalized_query = quote_plus(request.query, safe='')
+        # Decodifique a consulta se ela já estiver codificada
+        decoded_query = unquote(request.query)
+        # Normaliza a consulta novamente para garantir a codificação correta na URL
+        normalized_query = quote_plus(decoded_query)
         full_url = baseUrl + normalized_query
-
-        #Debug
-        print('QUERY: ' + request.query)
         
         try:
             response = requests.get(full_url)
