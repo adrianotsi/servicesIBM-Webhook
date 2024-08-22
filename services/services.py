@@ -19,7 +19,7 @@ def get_service(request: Service):
         
         try:
             response = requests.get(full_url)
-            response.raise_for_status()  # Verifica se houve algum erro na requisição
+            ##response.raise_for_status()  # Verifica se houve algum erro na requisição
             
             return response.json()  # Retorna o resultado da requisição como JSON
         except requests.exceptions.HTTPError as http_err:
