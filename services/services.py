@@ -23,8 +23,8 @@ def get_service(request: Service):
             
             return response.json()  # Retorna o resultado da requisição como JSON
         except requests.exceptions.HTTPError as http_err:
-            raise HTTPException(status_code=response.status_code, detail=str(http_err))
+            raise HTTPException(status_code=response.status_code, detail=str(http_err) + 'Query: ' + request.query)
         except Exception as err:
-            raise HTTPException(status_code=500, detail=str(err))
+            raise HTTPException(status_code=500, detail=str(err) + 'Query: ' + request.query)
     else:
         raise HTTPException(status_code=400, detail="Serviço não suportado.")
