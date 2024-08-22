@@ -32,6 +32,6 @@ def get_service(request: Service):
         except requests.exceptions.HTTPError as http_err:
             raise HTTPException(status_code=response.status_code, detail='QUERY: ' + request.query)
         except Exception as err:
-            raise HTTPException(status_code=500, detail=str(err) + ' QUERY: ' + request.query)
+            raise HTTPException(status_code=500, detail='QUERY: ' + request.query)
     else:
         raise HTTPException(status_code=400, detail="Serviço não suportado.")
