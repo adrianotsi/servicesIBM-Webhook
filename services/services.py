@@ -22,7 +22,7 @@ def get_service(request: Service):
         # Caso não esteja codificada, normalizamos a consulta
             normalized_query = quote_plus(decoded_query)
 
-        full_url = baseUrl + normalized_query
+        full_url = baseUrl + request.query
         
         try:
             response = requests.get(full_url)
