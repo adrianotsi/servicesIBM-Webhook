@@ -6,7 +6,7 @@ from urllib.parse import quote_plus, unquote
 
 class Service(BaseModel):
     service: str
-    query: str  # Adicionei um campo para a consulta
+    query: str 
 
 def get_service(request: Service):
     if request.service == 'zendesk':
@@ -30,7 +30,7 @@ def get_service(request: Service):
             
             return response.json()  # Retorna o resultado da requisição como JSON
         except requests.exceptions.HTTPError as http_err:
-            raise HTTPException(status_code=response.status_code, detail=str(http_err) + ' QUERY: ' + request.query)
+            raise HTTPException(status_code=response.status_code, detail='QUERY: ' + request.query)
         except Exception as err:
             raise HTTPException(status_code=500, detail=str(err) + ' QUERY: ' + request.query)
     else:
