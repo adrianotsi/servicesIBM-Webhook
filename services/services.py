@@ -11,8 +11,11 @@ class Service(BaseModel):
 def get_service(request: Service):
     if request.service == 'zendesk':
         baseUrl = os.getenv("ZENDESK_URL")
-        normalized_query = quote_plus(request.query)
+        normalized_query = quote_plus(request.query, safe='')
         full_url = baseUrl + normalized_query
+
+        #Debug
+        print('QUERY: ' + request.query)
         
         try:
             response = requests.get(full_url)
