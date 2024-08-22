@@ -13,8 +13,15 @@ def get_service(request: Service):
         baseUrl = os.getenv("ZENDESK_URL")
         # Decodifique a consulta se ela já estiver codificada
         decoded_query = unquote(request.query)
-        # Normaliza a consulta novamente para garantir a codificação correta na URL
-        normalized_query = quote_plus(decoded_query)
+
+        # Verifica se a query já está codificada
+        if decoded_query != request.query:
+        # Caso já esteja codificada, usamos diretamente a versão passada
+            normalized_query = request.query
+        else:
+        # Caso não esteja codificada, normalizamos a consulta
+            normalized_query = quote_plus(decoded_query)
+
         full_url = baseUrl + normalized_query
         
         try:
