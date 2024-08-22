@@ -2,6 +2,7 @@ from fastapi import HTTPException
 from pydantic import BaseModel
 import os
 import requests
+from urllib.parse import quote_plus
 
 class Service(BaseModel):
     service: str
@@ -10,7 +11,8 @@ class Service(BaseModel):
 def get_service(request: Service):
     if request.service == 'zendesk':
         baseUrl = os.getenv("ZENDESK_URL")
-        full_url = baseUrl + request.query
+        normalized_query = quote_plus(request.query)
+        full_url = baseUrl + normalized_query
         
         try:
             response = requests.get(full_url)
